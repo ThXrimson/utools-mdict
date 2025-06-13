@@ -8,10 +8,11 @@
   "features": [
     {
       "code": "mdict",
-      "explain": "mdict词典",
+      "explain": "mdict词典查词",
       "cmds": [
         "mdict",
         "词典",
+        "查词",
         {
           "type": "over",
           "label": "查词",

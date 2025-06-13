@@ -1,6 +1,6 @@
 <script setup>
-import { onMounted, ref } from 'vue';
-import Mdict from '@/components/Mdict.vue';
+import { ref } from 'vue';
+import Mdict from './components/Mdict.vue';
 
 const initialSearch = ref('');
 const initialized = ref(false);

@@ -3,6 +3,11 @@ const path = require('node:path');
 const { MDX } = require('js-mdict');
 const axios = require('axios');
 
+// import fs from 'node:fs';
+// import path from 'node:path';
+// import { MDX } from 'js-mdict';
+// import axios from 'axios';
+
 function getDict(filePath, ext) {
   if (ext === '.mdx') {
     return new MDX(filePath);
@@ -10,7 +15,7 @@ function getDict(filePath, ext) {
     throw new Error('Unsupported dictionary file type: ' + ext);
   }
 }
-
+console.log('preload services.js loaded');
 // 通过 window 对象向渲染进程注入 nodejs 能力
 window.services = {
   searchDeeplx(word) {

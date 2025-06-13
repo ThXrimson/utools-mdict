@@ -1,9 +1,9 @@
 <script setup>
 import { h, ref, computed } from 'vue';
 import { Delete } from '@element-plus/icons-vue';
-import DragHandle from '@/icons/DragHandle.vue';
+import DragHandle from '../icons/DragHandle.vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
-import { useDictStore } from '@/stores/dictStore.js';
+import { useDictStore } from '../stores/dictStore.js';
 const dictStore = useDictStore();
 const dictShowData = computed(() => {
   return dictStore.dicts.map((dict, index) => ({

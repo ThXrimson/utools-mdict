@@ -102,8 +102,8 @@
 
 <script setup>
 import { ref, onMounted, watch } from 'vue';
-import Settings from '@/components/Settings.vue';
-import { useDictStore } from '@/stores/dictStore.js';
+import Settings from './Settings.vue';
+import { useDictStore } from '../stores/dictStore.js';
 import { ElMessage, ElLoading } from 'element-plus';
 
 const { initialSearch } = defineProps({
