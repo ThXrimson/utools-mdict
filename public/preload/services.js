@@ -1,6 +1,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { MDX } = require('js-mdict');
+const axios = require('axios');
 
 function getDict(filePath, ext) {
   if (ext === '.mdx') {
@@ -12,6 +13,13 @@ function getDict(filePath, ext) {
 
 // 通过 window 对象向渲染进程注入 nodejs 能力
 window.services = {
+  searchDeeplx(word) {
+    return axios.post('https://deepl.deno.dev/translate', {
+      text: word,
+      target_lang: 'ZH',
+      source_lang: 'auto',
+    });
+  },
   searchDict(filePath, ext, searchTerm) {
     const dict = getDict(filePath, ext);
     const candidates = dict.prefix(searchTerm);
@@ -26,8 +34,11 @@ window.services = {
       };
     });
   },
-  getBaseName(filePath) {
-    return path.basename(filePath);
+  getExt(filePath) {
+    return path.extname(filePath).toLowerCase();
+  },
+  getBasenameWithoutExt(filePath) {
+    return path.basename(filePath, path.extname(filePath));
   },
   // 检查是否是文件
   isFile(path) {
@@ -50,27 +61,5 @@ window.services = {
   // 读文件
   readFile(file) {
     return fs.readFileSync(file, { encoding: 'utf-8' });
-  },
-  // 文本写入到下载目录
-  writeTextFile(text) {
-    const filePath = path.join(
-      window.utools.getPath('downloads'),
-      Date.now().toString() + '.txt'
-    );
-    fs.writeFileSync(filePath, text, { encoding: 'utf-8' });
-    return filePath;
-  },
-  // 图片写入到下载目录
-  writeImageFile(base64Url) {
-    const matchs = /^data:image\/([a-z]{1,20});base64,/i.exec(base64Url);
-    if (!matchs) return;
-    const filePath = path.join(
-      window.utools.getPath('downloads'),
-      Date.now().toString() + '.' + matchs[1]
-    );
-    fs.writeFileSync(filePath, base64Url.substring(matchs[0].length), {
-      encoding: 'base64',
-    });
-    return filePath;
   },
 };

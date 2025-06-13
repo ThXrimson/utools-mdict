@@ -1,26 +1,17 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import Mdict from '@/components/Mdict.vue';
-import ToastContainer from '@/components/ToastContainer.vue';
 
-const route = ref('');
-const enterAction = ref({});
+const initialSearch = ref('');
+const initialized = ref(false);
 
-onMounted(() => {
-  window.utools.onPluginEnter((action) => {
-    route.value = action.code;
-    enterAction.value = action;
-  });
-  window.utools.onPluginOut((isKill) => {
-    route.value = '';
-  });
+window.utools.onPluginEnter((action) => {
+  initialSearch.value = action.payload || '';
+  initialized.value = true;
 });
+window.utools.onPluginOut((isKill) => {});
 </script>
 
 <template>
-  <template v-if="route === 'mdict'">
-    <Mdict :enterAction="enterAction"></Mdict>
-  </template>
-  <!-- Toast 容器 -->
-  <ToastContainer />
+  <Mdict v-if="initialized" :initial-search="initialSearch" />
 </template>
