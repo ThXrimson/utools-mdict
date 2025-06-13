@@ -114,7 +114,7 @@ const { initialSearch } = defineProps({
 });
 const showSettings = ref(false);
 const dictStore = useDictStore();
-const activeDict = ref('deeplx');
+const activeDict = ref('DeepLX翻译');
 const searchTerm = ref('');
 const searchResults = ref([]);
 const totalResults = ref(0);
@@ -161,7 +161,7 @@ function debouncedSearch() {
 function performSearch() {
   if (searchTerm.value.trim() === '') {
     searchResults.value = [];
-    activeDict.value = 'deeplx';
+    activeDict.value = 'DeepLX翻译';
     totalResults.value = 0;
     selectedWord.value = null;
     return;
@@ -188,6 +188,7 @@ function performSearch() {
     },
   ];
   activeDict.value = 'DeepLX翻译';
+  selectedWord.value = searchResults.value[0].results[0];
   const dictResults = dictStore.enabledDicts.map((dict) => {
     const defaultResult = {
       id: dict.id,
