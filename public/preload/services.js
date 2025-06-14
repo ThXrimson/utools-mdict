@@ -31,13 +31,15 @@ window.services = {
     if (candidates.length === 0) {
       return [];
     }
-    return candidates.map((candidate) => {
+    const res = candidates.map((candidate) => {
       const record = dict.fetch(candidate);
       return {
         word: candidate.keyText,
         definition: record.definition,
       };
     });
+    dict.close();
+    return res;
   },
   getExt(filePath) {
     return path.extname(filePath).toLowerCase();
