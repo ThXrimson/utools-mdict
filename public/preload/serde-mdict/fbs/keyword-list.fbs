@@ -1,0 +1,12 @@
+table KeyWordItem {
+    record_start_offset: int;
+    record_end_offset: int;
+    key_text: string;
+    key_block_idx: int;
+}
+
+table KeyWordItemList {
+  items: [KeyWordItem];
+}
+
+root_type KeyWordItemList;
