@@ -25,8 +25,8 @@ process.on('message', async (msg) => {
       ])
       // 先将计算结果返回渲染进程 (主进程) 以便后续操作
       process.send({ status: 'done' })
-      // 关闭字典操作
       closeDict(dictID, dict)
+      // 关闭字典操作
       process.send({ status: 'closed' })
     } catch (error) {
       process.send({ status: 'error', error: error.message })

@@ -158,6 +158,7 @@ async function addDict(dictID, originalDictFilePath) {
     })
     worker.on('message', async (msg) => {
       if (msg.status === 'done') {
+        worker.kill()
         persistentTrie.init(true) // 重新初始化Trie
       } else if (msg.status === 'closed') {
         worker.kill()
@@ -167,7 +168,10 @@ async function addDict(dictID, originalDictFilePath) {
         reject(new Error(msg.error))
       }
     })
-    worker.on('error', reject)
+    worker.on('error', () => {
+      worker.kill()
+      reject(new Error('Worker encountered an error'))
+    })
     worker.on('exit', (code) => {
       if (code !== 0) reject(new Error(`Worker exited with code ${code}`))
     })
